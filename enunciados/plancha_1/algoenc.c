@@ -2,9 +2,11 @@
 #include <math.h>
 #include <stdlib.h>
 #include <ieee754.h>
+
 #define IS_NEGATIVE(sp) (*(unsigned int*)&sp >> 31)
 #define EXPONENT(sp) ((*(unsigned int*)&sp & 0x7f800000) >> 23) 
 #define MANTISA(sp) (*(unsigned int*)&sp & 0x007fffff)
+
 void print_bin_rep(int k){
   int n;
   int arg[32];
@@ -56,7 +58,7 @@ void eje_1(){
   test = 0 - 1;
   print_bin_rep(test); 
   puts("h)");
-  test = 0xa0000000 + 0xa0000000 ;
+  test = 0x80000000 + 0x80000000;
   print_bin_rep(test); 
 
 }

@@ -1,0 +1,88 @@
+N_1 = 100 -> 01100100
+N_2 = 120 -> 01111000
+N_3 = -63 -> 11000001
+N_4 = -56 -> 11001000
+N_5 = -91 -> 10100101
+
+00111111
+11000001
+
+00111000
+11001000
+1)
+- - - - - - - - - -
+N_1 01100100
++
+N_2 01111000
+-----------------
+s_1 11011100  0xdc
+
+OF = 1
+CF = 0
+
+2)
+- - - - - - - - - -
+N_3 11000001
++
+N_4 11001000    
+-----------------
+s_2 10001001 0x89
+
+OF = 0
+CF = 1
+
+3)
+- - - - - - - - - -
+N_3 11000001
++
+N_5 10100101
+------------
+s_3 01100110 0x66
+    
+OF = 1
+CF = 1
+
+4)
+- - - - - - - - - -
+N_2  01111000
++
+-N_4 00111000
+-------------
+s_4  10110000 0xb0
+
+OF = 1
+CF = 0
+
+5)
+- - - - - - - - - -
+N_5  10100101
++
+-N_2 10001000    
+-------------
+s_5  00101101 0x2d
+
+OF = 1
+CF = 1
+
+Para comprobar estos resultados en gdb, compilamos 
+gcc -g test.s -0 test
+
+Luego iniciamos gdb de la siguiente manera
+gdb ./test
+
+Lugo utilizamos el comando "b main", para poner el bp
+justo antes de la suma.
+Para setear los valores realizamos en la consola de gdb
+
+set $bl = Val1
+set $al = Val2
+s
+i r
+
+Las primeras dos instrucciones ponen los valores val1 y val 2
+en los registros bl y al respectivamente. Luego, el comando
+s ejecuta la instrucción addb %bl, %al. Finalmente con i r
+obtenemos información de los registros para corroborar los 
+resultados.
+
+
